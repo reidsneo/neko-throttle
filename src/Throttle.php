@@ -1,7 +1,6 @@
 <?php
 
 namespace Neko\Throttle;
-
 /**
  * @author Peter Chung <touhonoob@gmail.com>
  * @date May 16, 2015
@@ -60,7 +59,6 @@ class Throttle
 
         $t_key = $this->keyTime($id);
         $a_key = $this->keyAllow($id);
-
         if (!$this->adapter->exists($t_key)) {
             // first hit; setup storage; allow.
             $this->adapter->set($t_key, time(), $this->period);
@@ -87,8 +85,8 @@ class Throttle
             return false;
         }
 
-
         $this->adapter->set($a_key, $allowance - $use, $this->period);
+
         return true;
     }
 
@@ -138,7 +136,7 @@ class Throttle
      */
     private function keyTime($id)
     {
-        return $this->name . ":" . $id . ":time";
+        return $this->name . "|" . $id . "|time";
     }
 
     /**
@@ -147,6 +145,6 @@ class Throttle
      */
     private function keyAllow($id)
     {
-        return $this->name . ":" . $id . ":allow";
+        return $this->name . "|" . $id . "|allow";
     }
 }
